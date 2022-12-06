@@ -3,6 +3,7 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Gist from "react-gist";
 
+import FilterResults from 'react-filter-search';
 
 // export default App;
 class App extends React.Component {
@@ -15,15 +16,11 @@ class App extends React.Component {
       users: '',
       setUsers: '',
       DataHasLoaded: false,
-      tab: ""
+      tab: "",
+      data: [],
+      value: ''
     };
   }
-
-
-  // setSomeState = (label) => {
-  //   console.log(label);
-  //   this.setState({ tab: label });
-  // };
 
   //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
   // ComponentDidMount is used to
@@ -35,28 +32,48 @@ class App extends React.Component {
       .then((json) => {
         this.setState({
           items: json,
+          data: json,
           DataHasLoaded: true
         });
       })
 
   }
+  handleChange = event => {
+    const { value } = event.target;
+    this.setState({ value });
+  };
+
   setSomeState(label) {
-    console.log(label);
     this.setState({ tab: label });
   }
 
   render() {
     const { tab } = this.state;
     const { DataHasLoaded, items } = this.state;
-
-    // const rawUrl = item.files[0];
-
-    console.log(items);
+    const { data, value } = this.state;
 
     if (!DataHasLoaded) return <div>
       <h1> Please wait some time.... </h1> </div>;
     return (
+
       <div className="App">
+        <div>
+          <input type="text" value={value} onChange={this.handleChange} />
+          <SearchResults
+            value={value}
+            data={data}
+            renderResults={results => (
+              <div>
+                {results.map(el => (
+                  <div>
+                    <span>{el.name}</span>
+                    <span>{el.email}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          />
+        </div>
         <h1> Lookup a gist from github </h1>
         <div className='main-container'>
           <div className='left-side'>
