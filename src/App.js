@@ -1,25 +1,101 @@
-import logo from './logo.svg';
 import './App.css';
+import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
+import { Button } from './button';
+import { ListComponent } from './ListComponent';
+import Gist from "react-gist";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+// export default App;
+class App extends React.Component {
+  // Constructor 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      items: [],
+      users: '',
+      setUsers: '',
+      DataHasLoaded: false,
+      tab: ""
+    };
+  }
+
+
+  // setSomeState = (label) => {
+  //   console.log(label);
+  //   this.setState({ tab: label });
+  // };
+
+  //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
+  // ComponentDidMount is used to
+  // execute the code 
+  componentDidMount() {
+    fetch("https://api.github.com/users/logiblue/gists",
+      { method: 'GET', headers: {} })
+      .then((res) => res.json())
+      .then((json) => {
+        this.setState({
+          items: json,
+          DataHasLoaded: true
+        });
+      })
+
+  }
+  setSomeState(label) {
+    console.log(label);
+    this.setState({ tab: label });
+  }
+
+  render() {
+    const { tab } = this.state;
+    const { DataHasLoaded, items } = this.state;
+    let rawfile = 1;
+
+    // const rawUrl = item.files[0];
+
+    console.log(items);
+
+    if (!DataHasLoaded) return <div>
+      <h1> Please wait some time.... </h1> </div>;
+    return (
+      <div className="App">
+        <h1> Fetch data from an api in react </h1>
+        {
+
+          items.map((item, index) => (
+            <ol key={item.id} >
+
+              <h2
+                key={`${item.id} ${index}`}
+                onClick={() => this.setSomeState(item.id)}
+                style={{
+                  background: "#efefef",
+                  padding: "20px",
+                  cursor: "pointer"
+                }}
+              >
+                {item.description}
+              </h2>
+              {/* <a target="_blank" href={rawfile}>Open Link</a> */}
+
+              {/* <Gist id={item.id} file={Object.values(item.files)[0].filename} /> */}
+              <div>{tab ? tab : "No Value Selected"}</div>
+            </ol>
+          ))
+
+        }
+
+      </div>
+    );
+  }
 }
 
 export default App;
+
+
+
