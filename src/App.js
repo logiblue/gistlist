@@ -1,12 +1,6 @@
 import './App.css';
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Alert from 'react-bootstrap/Alert';
-import { Button } from './button';
-import { ListComponent } from './ListComponent';
 import Gist from "react-gist";
 
 
