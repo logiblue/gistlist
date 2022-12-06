@@ -48,7 +48,6 @@ class App extends React.Component {
   render() {
     const { tab } = this.state;
     const { DataHasLoaded, items } = this.state;
-    let rawfile = 1;
 
     // const rawUrl = item.files[0];
 
