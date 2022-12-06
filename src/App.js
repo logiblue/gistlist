@@ -64,32 +64,34 @@ class App extends React.Component {
       <h1> Please wait some time.... </h1> </div>;
     return (
       <div className="App">
-        <h1> Fetch data from an api in react </h1>
-        {
+        <h1> Lookup a gist from github </h1>
+        <div className='main-container'>
+          <div className='left-side'>
+            {
 
-          items.map((item, index) => (
-            <ol key={item.id} >
+              items.map((item, index) => (
+                <div className='left-side-single' key={item.id} >
 
-              <h2
-                key={`${item.id} ${index}`}
-                onClick={() => this.setSomeState(item.id)}
-                style={{
-                  background: "#efefef",
-                  padding: "20px",
-                  cursor: "pointer"
-                }}
-              >
-                {item.description}
-              </h2>
-              {/* <a target="_blank" href={rawfile}>Open Link</a> */}
+                  <h2
+                    key={`${item.id} ${index}`}
+                    onClick={() => this.setSomeState(<Gist id={item.id} file={Object.values(item.files)[0].filename} />
+                    )}
+                    style={{
+                      background: "#efefef",
+                      padding: "20px",
+                      cursor: "pointer"
+                    }}
+                  >
+                    {item.description}
+                  </h2>
+                </div>
+              ))
 
-              {/* <Gist id={item.id} file={Object.values(item.files)[0].filename} /> */}
-              <div>{tab ? tab : "No Value Selected"}</div>
-            </ol>
-          ))
+            }
+          </div>
+          <div className='right-side'>{tab ? tab : "No Value Selected"}</div>
 
-        }
-
+        </div>
       </div>
     );
   }
